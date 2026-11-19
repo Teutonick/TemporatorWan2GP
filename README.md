@@ -1,22 +1,44 @@
 # TemporatorWan2GP
 
-Дополнение для основного генератора и вкладки Edit в Wan2GP 19.292 и 20.00 на Windows. Генератор, Python, Gradio и FFmpeg продолжают работать с обычными файловыми путями. В защищённом запуске выходной каталог генератора, загрузки Gradio, стандартный временный каталог и автосохранение очереди находятся в отдельной папке внутри стандартного временного каталога Windows. Wan2GP, Python и Gradio используют свои штатные механизмы временных файлов с путями, заданными на время запуска. Настройки путей Wan2GP используются для экспорта.
+**Keep a generation only when you choose SAVE.**
 
-## Установка
+[Русская версия](README.ru.md) · [MIT license](LICENSE) · [Development](docs/DEVELOPMENT.md) · [Changelog](CHANGELOG.md)
 
-1. Скопируйте каталог проекта в `D:\Wan2GP\Wan2GP\plugins\TemporatorWan2GP`. В его корне должны находиться `plugin.py`, `plugin_info.json`, `storage.py`, `session.py` и `__init__.py`.
-2. В обычном Wan2GP откройте **Plugins**, найдите **TemporatorWan2GP** и нажмите **Install**, затем **Enable**. Для уже установленного дополнения достаточно **Enable**. Закройте Wan2GP. Если дополнение опубликовано в Git-репозитории, вместо копирования используйте **Install from URL** в том же менеджере. Имя репозитория должно быть `TemporatorWan2GP`.
-3. Перезапустите Wan2GP привычным способом. При загрузке аддона Wan2GP ещё не создал интерфейс и обработчики загрузок Gradio, поэтому аддон сам настраивает временные пути до их создания.
+Temporator is a Windows add-on for the [WanGP (Wan2GP)](https://github.com/deepbeepmeep/WanGP) web interface. It keeps supported generation media in an isolated temporary session and adds **SAVE** below the **Media Generator** and **Edit** galleries. Start WanGP as usual.
 
-## Сохранение
+## Install
 
-После завершения очереди выберите готовый результат в галерее **Media Generator** или **Edit** и нажмите **SAVE** под галереей. Копия результата и распознанных Wan2GP сопутствующих файлов появится в настроенной папке для видео, изображений, аудио или 3D. Для workspace с выделенной папкой Wan2GP использует эту папку. Уведомление показывает итоговый путь. Повторное сохранение идентичного комплекта использует уже существующую копию.
+Requires Windows and WanGP 19.292 or later. The add-on uses WanGP's bundled Python and Gradio.
 
-Исходники и результаты временно находятся на диске. Готовый результат остаётся доступен для предпросмотра, повторного использования и SAVE до завершения запуска. При штатном завершении Python сессия удаляется. Если Wan2GP принудительно завершил процесс, в том числе при встроенном Restart, аддон удалит остатки при следующей загрузке. Старые выходные файлы, исходники и системные временные каталоги дополнение не удаляет. Автосохранённая очередь и история Deepy защищённого запуска действуют до завершения сессии. Настройки Wan2GP и веса моделей продолжают храниться штатно.
+1. Open **Apps & PlugIn Manager → Install from URL**.
+2. Enter the repository URL and click **Download and Install from URL**.
 
-## Границы режима
+   ```text
+   https://github.com/Teutonick/TemporatorWan2GP
+   ```
 
-Проверяемый контур дополнения — штатные генерации и импорт через галерею в Media Generator / Edit. Самостоятельные пути записи у Media Flow, Motion Designer, сторонних приложений и расширений могут обходить маршрутизацию. Отдельные CLI, MCP, другие процессы, удалённые сервисы, кэш браузера и запись системного файла подкачки контролируются соответствующими приложениями и ОС. Для строгого режима запускайте штатный генератор и Edit с включённым Temporator и не используйте функции с отдельными путями записи. Политика на уровне всего процесса для любых расширений потребует изменений Wan2GP либо изоляции записи на уровне ОС.
+3. Enable **TemporatorWan2GP** and restart WanGP.
 
+Already using a manually copied version? Back up or move its folder outside WanGP's `plugins` folder before installing from URL. WanGP needs a Git checkout to update an add-on.
 
+## Generate, preview, save
 
+1. Generate or edit media in the native interface.
+2. Once the queue finishes, select a result in the gallery. Temporator keeps it available for preview and reuse during the session.
+3. Click **SAVE** to copy it and its recognized companion files to your WanGP output folder. A workspace with dedicated storage uses its own output folder.
+
+Repeated saves of the same bundle reuse the existing copy. Temporator removes its session when Python shuts down normally. Following a forced stop, it clears leftover sessions the next time the add-on loads. Existing files and explicitly exported results remain on disk.
+
+## What the session covers
+
+| Within Temporator's scope | Outside its scope |
+| --- | --- |
+| Native Media Generator and Edit outputs and processing files routed through WanGP's output resolver | Independent write paths used by tools such as Media Flow, Motion Designer, or third-party add-ons |
+| Gradio uploads and previews, and standard temporary files created after activation | Browser caches, OS storage, remote services, and other processes |
+| Automatic queue snapshots and the Deepy session directory for this run | Headless CLI and separate MCP/API processes; existing data and model caches |
+
+Preview files are written to disk during the session. Cleanup is ordinary file removal. See [disclaimer and third-party terms](DISCLAIMER.md) and [security reporting](SECURITY.md).
+
+## Update
+
+Use **Update** in the add-on manager, then restart WanGP. For a manual installation, replace the add-on files from the same release while WanGP is closed. See the [maintainer release guide](docs/RELEASING.md) for details on how WanGP finds updates.

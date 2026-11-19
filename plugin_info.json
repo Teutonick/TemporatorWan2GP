@@ -4,7 +4,12 @@
   "version": "0.2.0",
   "description": "Keep native generation media in an isolated temporary session and export the selected result with SAVE.",
   "type": ["extension"],
-  "wan2gp_version": "19.292"
+  "date": "2026-11-19",
+  "wan2gp_version": "19.292",
+  "url": "https://github.com/Teutonick/TemporatorWan2GP",
+  "info_card": {
+    "tagline": "Keep results only when you choose SAVE",
+    "description": "Use temporary storage for native generation and edit sessions. Copy selected results to the configured WanGP output folder with SAVE.",
+    "details": "Windows · Media Generator and Edit · Restart required after enabling"
+  }
 }
-
-
