@@ -1,0 +1,10 @@
+{
+  "name": "TemporatorWan2GP",
+  "author": "Teutonick",
+  "version": "0.2.0",
+  "description": "Keep native generation media in an isolated temporary session and export the selected result with SAVE.",
+  "type": ["extension"],
+  "wan2gp_version": "19.292"
+}
+
+
